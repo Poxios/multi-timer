@@ -190,7 +190,7 @@ const App = () => {
           </Stack>
         </CardContent>
       </Card>
-      <Container maxWidth="lg" sx={{ display: "flex", alignItems: "center", gap: 2, height: "100vh" }}>
+      <Container maxWidth="lg" sx={{ display: "flex", alignItems: "center", gap: 2, height: "100vh", overflowY: "scroll" }}>
         <Stack sx={{ flexWrap: "wrap", flexDirection: "row" }} gap={GAP_BETWEEN_TIMERS}>
           {Array.from({ length: timerCount }).map((_, index) => (
             <TimerCardComponent timerIndex={index} timersPerRow={timersPerRow} gapProvided={GAP_BETWEEN_TIMERS} />
