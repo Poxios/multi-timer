@@ -3,6 +3,22 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import { Button, Card, CardContent, CardHeader, IconButton, Stack, Input } from "@mui/material";
 import { Pause, PlayArrow, Refresh } from "@mui/icons-material";
+const playDingSound = () => {
+  const audioContext = new window.AudioContext(); // 오디오 컨텍스트 생성
+  const oscillator = audioContext.createOscillator(); // 오실레이터 생성
+  const gainNode = audioContext.createGain(); // 볼륨 조절을 위한 GainNode 생성
+
+  oscillator.type = "sine"; // 사인파로 소리 생성
+  oscillator.frequency.setValueAtTime(1000, audioContext.currentTime); // 주파수 설정 (1000Hz)
+
+  gainNode.gain.setValueAtTime(0.1, audioContext.currentTime); // 볼륨 설정 (0.1로 낮추어 설정)
+
+  oscillator.connect(gainNode); // 오실레이터를 GainNode에 연결
+  gainNode.connect(audioContext.destination); // GainNode를 오디오 컨텍스트에 연결
+
+  oscillator.start(); // 소리 시작
+  oscillator.stop(audioContext.currentTime + 0.5); // 0.1초 후에 소리 멈춤
+};
 
 const TimerCardComponent = ({
   timerIndex,
@@ -29,7 +45,7 @@ const TimerCardComponent = ({
           localStorage.setItem(`timer-${timerIndex}-seconds-left`, secondsLeft.toString());
 
           // TODO: Play sound
-          new Audio("/sound/alarm.mp3").play();
+          playDingSound();
         } else {
           setSecondsLeft((prev) => prev - 1);
         }
